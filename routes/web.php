@@ -12,5 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.backend');
 });
+Route::get('tag/create','TagController@create');
+Route::get('tag/','TagController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
