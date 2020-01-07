@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('layouts.backend');
+    return view('welcome');
 });
 Route::get('tag/create','TagController@create');
 Route::get('tag/','TagController@index');
