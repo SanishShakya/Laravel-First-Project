@@ -14,9 +14,16 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('tag/create','TagController@create');
-Route::get('tag/','TagController@index');
+
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::prefix('backend/')->namespace('Backend')->name('backend.')->group(function (){
+    /*route for tag controller*/
+    Route::get('tag/create','TagController@create')->name('tag.create');
+    Route::get('tag','TagController@store')->name('tag.store');
+
+});
