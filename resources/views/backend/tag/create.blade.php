@@ -31,14 +31,46 @@
                 </div>
             </div>
             <div class="box-body">
-               {!! Form::open(['route' => 'backend.tag.store', 'method' => 'post']) !!}
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{$error}}</li>
+                                @endforeach
+                        </ul>
+                    </div>
+                @endif
+               {!! Form::open(['route' => 'backend.tag.store', 'method' => 'POST']) !!}
                 <div class="form-group">
                     {!! Form::label('name', 'Name'); !!}
                     {!! Form::text('name', null, ['placeholder' => 'Enter Name','class'=> 'form-control']); !!}
+                    @if ($errors->has('name'))
+                        <label class="text text-danger">{{$errors->first('name')}}</label>
+                    @endif
                 </div>
                 <div class="form-group">
                     {!! Form::label('slug', 'Slug'); !!}
                     {!! Form::text('slug', null, ['placeholder' => 'Enter Slug','class'=> 'form-control']); !!}
+                    @if ($errors->has('slug'))
+                        <label class="text text-danger">{{$errors->first('slug')}}</label>
+                    @endif
+                </div>
+                <div class="form-group">
+                    {!! Form::label('meta_keyword', 'Meta Keyword'); !!}
+                    {!! Form::text('meta_keyword', null, ['placeholder' => 'Enter Meta Keyword','class'=> 'form-control']); !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('meta_description', 'Meta Description'); !!}
+                    {!! Form::text('meta_description', null, ['placeholder' => 'Enter Meta Description','class'=> 'form-control']); !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('status', 'Status'); !!}
+                    {!! Form::radio('status', 1); !!} Active
+                    {!! Form::radio('status', 0, true); !!} Deactive
+                </div>
+                <div class="form-group">
+                    {!! Form::submit('Save Tag', ['class' => 'btn btn-success']); !!}
+
                 </div>
                 {!! Form::close() !!}
             </div>

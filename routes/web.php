@@ -24,6 +24,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('backend/')->namespace('Backend')->name('backend.')->group(function (){
     /*route for tag controller*/
     Route::get('tag/create','TagController@create')->name('tag.create');
-    Route::get('tag','TagController@store')->name('tag.store');
+    Route::post('tag','TagController@store')->name('tag.store');
 
 });
