@@ -20,7 +20,7 @@ class CreateModulesTable extends Migration
             $table->boolean('status')->default(0);
             $table->softDeletes();
             $table->unsignedBigInteger('created_by');
-            $table->unsignedBigInteger('updated_by')->null();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('updated_by')->references('id')->on('users');
             $table->timestamps();

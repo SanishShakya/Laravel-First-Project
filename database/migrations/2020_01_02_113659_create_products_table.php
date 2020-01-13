@@ -30,7 +30,7 @@ class CreateProductsTable extends Migration
             $table->boolean('status')->default(0);
             $table->softDeletes();
             $table->unsignedBigInteger('created_by');
-            $table->unsignedBigInteger('updated_by')->null();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->foreign('unit_id')->references('id')->on('units');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('subcategory_id')->references('id')->on('subcategories');

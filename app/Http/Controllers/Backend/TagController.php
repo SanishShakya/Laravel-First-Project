@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\TagRequest;
+use http\Env\Request;
+use phpDocumentor\Reflection\DocBlock\Tag;
 
 
 class TagController extends Controller
@@ -36,7 +38,8 @@ class TagController extends Controller
      */
     public function store(TagRequest $request)
     {
-        dd($request->all());
+        $request->request->add(['created_by' => auth()->user()->id]);
+        \App\Model\Tag::create($request->all());
     }
 
     /**
