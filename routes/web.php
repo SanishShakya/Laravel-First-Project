@@ -25,5 +25,9 @@ Route::prefix('backend/')->namespace('Backend')->name('backend.')->group(functio
     /*route for tag controller*/
     Route::get('tag/create','TagController@create')->name('tag.create');
     Route::post('tag','TagController@store')->name('tag.store');
-
+});
+Route::prefix('backend/')->namespace('Backend')->name('backend.')->group(function (){
+    /*route for category controller*/
+    Route::get('category/create','CategoryController@create')->name('category.create');
+    Route::post('category','CategoryController@store')->name('category.store');
 });
