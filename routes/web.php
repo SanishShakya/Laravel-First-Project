@@ -25,6 +25,8 @@ Route::prefix('backend/')->namespace('Backend')->name('backend.')->group(functio
     /*route for tag controller*/
     Route::get('tag/create','TagController@create')->name('tag.create');
     Route::post('tag','TagController@store')->name('tag.store');
+    Route::get('tag','TagController@index')->name('tag.index');
+
 });
 Route::prefix('backend/')->namespace('Backend')->name('backend.')->group(function (){
     /*route for category controller*/
