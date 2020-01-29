@@ -52,7 +52,8 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        //
+        $data['row'] = Tag::find($id);
+        return view('backend.tag.show',compact('data'));
     }
 
     /**
@@ -86,6 +87,7 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Tag::destroy($id);
+        return redirect()->route('backend.tag.index');
     }
 }

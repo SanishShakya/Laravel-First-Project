@@ -32,35 +32,47 @@
             </div>
             <div class="box-body">
                 <table class="table table-bordered">
-                    <thead>
+                  <tr>
+                      <th>Name:</th>
+                      <td>{{ucFirst($data['row']->name)}}</td>
+                  </tr>
                     <tr>
-                        <th>S.N.</th>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th>Slug:</th>
+                        <td>{{$data['row']->slug}}</td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($data['rows'] as $key => $row)
                     <tr>
-                       <td>{{$key+1}}</td>
-                        <td>{{$row->name}}</td>
-                        <td>
-                            @if($row->status == 1)
+                        <th>Status:</th>
+                         <td> @if($data['row']->status == 1)
                                 <span class="label label-success">Active</span>
                             @else
                                 <span class="label label-danger">De-active</span>
                             @endif
                         </td>
-                        <td>
-                            <a href="{{route('backend.tag.show',$row->id)}}" class="btn btn-info">Show</a>
-                            {!! Form::open(['route' => ['backend.tag.destroy',$row->id], 'method' => 'delete']) !!}
-                            {!! Form::submit('Delete',['class' => 'btn btn-danger']) !!}
-                            {!! Form::close() !!}
-                        </td>
                     </tr>
-                    @endforeach
-                    </tbody>
+                    <tr>
+                        <th>Meta Description:</th>
+                        <td>{{$data['row']->meta_description}}</td>
+                    </tr>
+                    <tr>
+                        <th>Meta Keyword:</th>
+                        <td>{{$data['row']->meta_keyword}}</td>
+                    </tr>
+                    <tr>
+                        <th>Created At:</th>
+                        <td>{{$data['row']->created_at}}</td>
+                    </tr>
+                    <tr>
+                        <th>Created By:</th>
+                        <td>{{$data['row']->createdBy->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Updated At:</th>
+                        <td>{{$data['row']->updated_at}}</td>
+                    </tr>
+{{--                    <tr>--}}
+{{--                        <th>Updated By:</th>--}}
+{{--                        <td>{{$data['row']->updatedBy->name}}</td>--}}
+{{--                    </tr>--}}
                 </table>
             </div>
             <!-- /.box-body -->

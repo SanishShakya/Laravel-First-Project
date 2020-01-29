@@ -26,6 +26,9 @@ Route::prefix('backend/')->namespace('Backend')->name('backend.')->group(functio
     Route::get('tag/create','TagController@create')->name('tag.create');
     Route::post('tag','TagController@store')->name('tag.store');
     Route::get('tag','TagController@index')->name('tag.index');
+    Route::get('{id}/tag','TagController@show')->name('tag.show');
+    Route::delete('{id}/tag','TagController@destroy')->name('tag.destroy');
+
 
 });
 Route::prefix('backend/')->namespace('Backend')->name('backend.')->group(function (){
