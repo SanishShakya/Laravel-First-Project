@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\TagRequest;
-use http\Env\Request;
+use Illuminate\Http\Request;
 use App\Model\Tag;
 
 
@@ -64,7 +64,8 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['row'] = Tag::find($id);
+        return view('backend.tag.edit',compact('data'));
     }
 
     /**
@@ -76,7 +77,10 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data['row'] = Tag::find($id);
+        $request->request->add(['updated_by' => auth()->user()->id]);
+        $data['row']->update($request->all());
+        return redirect()->route('backend.tag.index');
     }
 
     /**

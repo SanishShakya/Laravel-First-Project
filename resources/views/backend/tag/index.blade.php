@@ -53,6 +53,7 @@
                             @endif
                         </td>
                         <td>
+                            <a href="{{route('backend.tag.edit',$row->id)}}" class="btn btn-warning">Edit</a>
                             <a href="{{route('backend.tag.show',$row->id)}}" class="btn btn-info">Show</a>
                             {!! Form::open(['route' => ['backend.tag.destroy',$row->id], 'method' => 'delete']) !!}
                             {!! Form::submit('Delete',['class' => 'btn btn-danger']) !!}

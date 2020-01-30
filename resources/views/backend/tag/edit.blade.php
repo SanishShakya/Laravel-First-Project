@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title','Tag Create')
+@section('title','Tag Edit')
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -10,7 +10,7 @@
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="#">Tag</a></li>
-            <li class="active">Create Tag</li>
+            <li class="active">Edit Tag</li>
         </ol>
     </section>
 
@@ -40,8 +40,9 @@
                         </ul>
                     </div>
                 @endif
-               {!! Form::open(['route' => 'backend.tag.store', 'method' => 'POST']) !!}
-                @include('backend.tag.include.main_form',['button' => 'Save Tag'])
+{{--               {!! Form::open(['route' => 'backend.tag.update', 'method' => 'PUT']) !!}--}}
+                    {!! Form::model($data['row'], ['route' => ['backend.tag.update', $data['row']->id],'method' => 'PUT']) !!}
+                @include('backend.tag.include.main_form',['button' => 'Update Tag'])
                 {!! Form::close() !!}
             </div>
             <!-- /.box-body -->

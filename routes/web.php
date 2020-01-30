@@ -26,13 +26,15 @@ Route::prefix('backend/')->namespace('Backend')->name('backend.')->group(functio
     Route::get('tag/create','TagController@create')->name('tag.create');
     Route::post('tag','TagController@store')->name('tag.store');
     Route::get('tag','TagController@index')->name('tag.index');
-    Route::get('{id}/tag','TagController@show')->name('tag.show');
+    Route::get('tag/{id}','TagController@show')->name('tag.show');
     Route::delete('{id}/tag','TagController@destroy')->name('tag.destroy');
-
-
-});
-Route::prefix('backend/')->namespace('Backend')->name('backend.')->group(function (){
+    Route::get('tag/{id}/edit','TagController@edit')->name('tag.edit');
+    Route::put('tag/{id}','TagController@update')->name('tag.update');
     /*route for category controller*/
     Route::get('category/create','CategoryController@create')->name('category.create');
     Route::post('category','CategoryController@store')->name('category.store');
+
+
 });
+
+
