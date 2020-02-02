@@ -32,6 +32,7 @@
             </div>
             <div class="box-body">
                 Start creating your amazing application!
+                @include('backend.includes.flash_message')
             </div>
             <!-- /.box-body -->
             <div class="box-footer">

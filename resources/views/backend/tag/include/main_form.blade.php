@@ -1,16 +1,12 @@
 <div class="form-group">
     {!! Form::label('name', 'Name'); !!}
     {!! Form::text('name', null, ['placeholder' => 'Enter Name','class'=> 'form-control']); !!}
-    @if ($errors->has('name'))
-        <label class="text text-danger">{{$errors->first('name')}}</label>
-    @endif
+    @include('backend.includes.form_error',['field' => 'name'])
 </div>
 <div class="form-group">
     {!! Form::label('slug', 'Slug'); !!}
     {!! Form::text('slug', null, ['placeholder' => 'Enter Slug','class'=> 'form-control']); !!}
-    @if ($errors->has('slug'))
-        <label class="text text-danger">{{$errors->first('slug')}}</label>
-    @endif
+    @include('backend.includes.form_error',['field' => 'slug'])
 </div>
 <div class="form-group">
     {!! Form::label('meta_keyword', 'Meta Keyword'); !!}
@@ -23,7 +19,7 @@
 <div class="form-group">
     {!! Form::label('status', 'Status'); !!}
     {!! Form::radio('status', 1); !!} Active
-    {!! Form::radio('status', 0, true); !!} Deactive
+    {!! Form::radio('status', 0, true); !!} De Active
 </div>
 <div class="form-group">
     {!! Form::submit($button, ['class' => 'btn btn-success']); !!}

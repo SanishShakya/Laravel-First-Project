@@ -32,6 +32,7 @@
             </div>
             <div class="box-body">
                 <table class="table table-bordered">
+                    @include('backend.includes.flash_message')
                     <thead>
                     <tr>
                         <th>S.N.</th>

@@ -17,8 +17,13 @@ class TagController extends Controller
      */
     public function index()
     {
-        $data['rows'] = \App\Model\Tag::all();
-        return view('backend.tag.index',compact('data'));
+        try{
+            $data['rows'] = \App\Model\Tag::all();
+            return view('backend.tag.index',compact('data'));
+        }catch(Exceprion $e){
+            redirect()->route('home')->flash('exception',$e->getMessage());
+        }
+
     }
 
     /**
@@ -39,9 +44,17 @@ class TagController extends Controller
      */
     public function store(TagRequest $request)
     {
-        $request->request->add(['created_by' => auth()->user()->id]);
-        \App\Model\Tag::create($request->all());
-        return redirect()->route('backend.tag.index');
+        try{
+            $request->request->add(['created_by' => auth()->user()->id]);
+            $tag = Tag::create($request->all());
+            if($tag){
+                return redirect()->route('backend.tag.index')->with('success','Tag Created Successfully');
+            }else{
+                return back()->with('error','Tag Creation Failed');
+            }
+        }catch(Exception $e){
+            return redirect()->route('backend.tag.index')->with('exception',$e->getMessage());
+        }
     }
 
     /**
@@ -77,10 +90,18 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data['row'] = Tag::find($id);
-        $request->request->add(['updated_by' => auth()->user()->id]);
-        $data['row']->update($request->all());
-        return redirect()->route('backend.tag.index');
+        try {
+            $data['row'] = Tag::find($id);
+            $request->request->add(['updated_by' => auth()->user()->id]);
+            $tag = $data['row']->update($request->all());
+            if ($tag) {
+                return redirect()->route('backend.tag.index')->with('success', 'Tag Updated Successfully');
+            } else {
+                return back()->with('error', 'Tag Creation Failed');
+            }
+        }catch(Exception $e){
+            return redirect()->route('backend.tag.index')->with('exception',$e->getMessage());
+            }
     }
 
     /**
@@ -91,7 +112,13 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        Tag::destroy($id);
-        return redirect()->route('backend.tag.index');
+        try{
+            Tag::destroy($id);
+            return redirect()->route('backend.tag.index')->with('success','Tag Deleted Successfully');
+        }catch(Exception $e){
+            return redirect()->route('backend.tag.index')->with('exception',$e.getMessage());
+
+        }
+
     }
 }
