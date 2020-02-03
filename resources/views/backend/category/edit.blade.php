@@ -1,16 +1,16 @@
 @extends('layouts.backend')
-@section('title','Category Create')
+@section('title','Tag Edit')
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
             Category Management
-            <small>it all about categories</small>
+            <small>it all about category</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="#">Category</a></li>
-            <li class="active">Create Category</li>
+            <li class="active">Edit Category</li>
         </ol>
     </section>
 
@@ -36,12 +36,13 @@
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{$error}}</li>
-                            @endforeach
+                                @endforeach
                         </ul>
                     </div>
                 @endif
-                {!! Form::open(['route' => 'backend.category.store', 'method' => 'POST']) !!}
-                    @include('backend.category.include.main_form',['button' => 'Save Category'])
+{{--               {!! Form::open(['route' => 'backend.category.update', 'method' => 'PUT']) !!}--}}
+                    {!! Form::model($data['row'], ['route' => ['backend.category.update', $data['row']->id],'method' => 'PUT']) !!}
+                @include('backend.category.include.main_form',['button' => 'Update Category'])
                 {!! Form::close() !!}
             </div>
             <!-- /.box-body -->

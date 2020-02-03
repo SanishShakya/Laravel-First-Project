@@ -2,16 +2,15 @@
 
 namespace App\Model;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Unit extends Model
 {
     use SoftDeletes;
-    protected $table = 'categories';
+    protected $table = 'units';
     protected $fillable = [
-        'name','slug','rank','description','status','meta_description','meta_keyword','created_by','updated_by'
+        'name','status','created_by','updated_by'
     ];
     function createdBy(){
         return $this->hasOne(User::class, 'id','created_by');
@@ -20,4 +19,3 @@ class Category extends Model
         return $this->hasOne(User::class, 'id','updated_by');
     }
 }
-

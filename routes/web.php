@@ -33,7 +33,27 @@ Route::prefix('backend/')->namespace('Backend')->name('backend.')->group(functio
     /*route for category controller*/
     Route::get('category/create','CategoryController@create')->name('category.create');
     Route::post('category','CategoryController@store')->name('category.store');
-
+    Route::get('category','CategoryController@index')->name('category.index');
+    Route::get('category/{id}','CategoryController@show')->name('category.show');
+    Route::delete('{id}/category','CategoryController@destroy')->name('category.destroy');
+    Route::get('category/{id}/edit','CategoryController@edit')->name('category.edit');
+    Route::put('category/{id}','CategoryController@update')->name('category.update');
+    /*route for role controller*/
+    Route::get('role/create','RoleController@create')->name('role.create');
+    Route::post('role','RoleController@store')->name('role.store');
+    Route::get('role','RoleController@index')->name('role.index');
+    Route::get('role/{id}','RoleController@show')->name('role.show');
+    Route::delete('{id}/role','RoleController@destroy')->name('role.destroy');
+    Route::get('role/{id}/edit','RoleController@edit')->name('role.edit');
+    Route::put('role/{id}','RoleController@update')->name('role.update');
+    /*route for unit controller*/
+    Route::get('unit/create','UnitController@create')->name('unit.create');
+    Route::post('unit','UnitController@store')->name('unit.store');
+    Route::get('unit','UnitController@index')->name('unit.index');
+    Route::get('unit/{id}','UnitController@show')->name('unit.show');
+    Route::delete('{id}/unit','UnitController@destroy')->name('unit.destroy');
+    Route::get('unit/{id}/edit','UnitController@edit')->name('unit.edit');
+    Route::put('unit/{id}','UnitController@update')->name('unit.update');
 
 });
 

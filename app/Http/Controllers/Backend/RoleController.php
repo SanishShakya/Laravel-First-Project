@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\TagRequest;
+use App\Http\Requests\Backend\RoleRequest;
+use App\Model\Role;
 use Illuminate\Http\Request;
-use App\Model\Tag;
 
-
-class TagController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,12 +17,11 @@ class TagController extends Controller
     public function index()
     {
         try{
-            $data['rows'] = \App\Model\Tag::all();
-            return view('backend.tag.index',compact('data'));
+            $data['rows'] = Role::all();
+            return view('backend.role.index',compact('data'));
         }catch(Exception $e){
             redirect()->route('home')->flash('exception',$e->getMessage());
         }
-
     }
 
     /**
@@ -33,7 +31,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view('backend.tag.create');
+        return view('backend.role.create');
     }
 
     /**
@@ -42,18 +40,18 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TagRequest $request)
+    public function store(RoleRequest $request)
     {
         try{
             $request->request->add(['created_by' => auth()->user()->id]);
-            $tag = Tag::create($request->all());
-            if($tag){
-                return redirect()->route('backend.tag.index')->with('success','Tag Created Successfully');
+            $role = Role::create($request->all());
+            if($role){
+                return redirect()->route('backend.role.index')->with('success','Role Created Successfully');
             }else{
-                return back()->with('error','Tag Creation Failed');
+                return back()->with('error','Role Creation Failed');
             }
         }catch(Exception $e){
-            return redirect()->route('backend.tag.index')->with('exception',$e->getMessage());
+            return redirect()->route('backend.role.index')->with('exception',$e->getMessage());
         }
     }
 
@@ -65,8 +63,8 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        $data['row'] = Tag::find($id);
-        return view('backend.tag.show',compact('data'));
+        $data['row'] = Role::find($id);
+        return view('backend.role.show',compact('data'));
     }
 
     /**
@@ -77,8 +75,8 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        $data['row'] = Tag::find($id);
-        return view('backend.tag.edit',compact('data'));
+        $data['row'] = Role::find($id);
+        return view('backend.role.edit',compact('data'));
     }
 
     /**
@@ -91,17 +89,17 @@ class TagController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $data['row'] = Tag::find($id);
+            $data['row'] = Role::find($id);
             $request->request->add(['updated_by' => auth()->user()->id]);
-            $tag = $data['row']->update($request->all());
-            if ($tag) {
-                return redirect()->route('backend.tag.index')->with('success', 'Tag Updated Successfully');
+            $role = $data['row']->update($request->all());
+            if ($role) {
+                return redirect()->route('backend.role.index')->with('success', 'Role Updated Successfully');
             } else {
-                return back()->with('error', 'Tag Creation Failed');
+                return back()->with('error', 'Role Creation Failed');
             }
         }catch(Exception $e){
-            return redirect()->route('backend.tag.index')->with('exception',$e->getMessage());
-            }
+            return redirect()->route('backend.role.index')->with('exception',$e->getMessage());
+        }
     }
 
     /**
@@ -113,12 +111,11 @@ class TagController extends Controller
     public function destroy($id)
     {
         try{
-            Tag::destroy($id);
-            return redirect()->route('backend.tag.index')->with('success','Tag Deleted Successfully');
+            Role::destroy($id);
+            return redirect()->route('backend.role.index')->with('success','Role Deleted Successfully');
         }catch(Exception $e){
-            return redirect()->route('backend.tag.index')->with('exception',$e.getMessage());
+            return redirect()->route('backend.role.index')->with('exception',$e.getMessage());
 
         }
-
     }
 }

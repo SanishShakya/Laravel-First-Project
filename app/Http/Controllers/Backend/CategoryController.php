@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\CategoryRequest;
+use App\Model\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -14,7 +16,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        try{
+            $data['rows'] = Category::all();
+            return view('backend.category.index',compact('data'));
+        }catch(Exception $e){
+            redirect()->route('home')->flash('exception',$e->getMessage());
+        }
     }
 
     /**
@@ -35,8 +42,18 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $request->request->add(['created_by' => auth()->user()->id]);
-        \App\Model\Category::create($request->all());
+        try{
+            $request->request->add(['created_by' => auth()->user()->id]);
+            $category = Category::create($request->all());
+            if($category){
+                return redirect()->route('backend.category.index')->with('success','Category Created Successfully');
+            }else{
+                return back()->with('error','Category Creation Failed');
+            }
+        }catch(Exception $e){
+            return redirect()->route('backend.category.index')->with('exception',$e->getMessage());
+        }
+
     }
 
     /**
@@ -47,7 +64,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $data['row'] = Category::find($id);
+        return view('backend.category.show',compact('data'));
     }
 
     /**
@@ -58,7 +76,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['row'] = Category::find($id);
+        return view('backend.category.edit',compact('data'));
     }
 
     /**
@@ -70,7 +89,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $data['row'] = Category::find($id);
+            $request->request->add(['updated_by' => auth()->user()->id]);
+            $category = $data['row']->update($request->all());
+            if ($category) {
+                return redirect()->route('backend.category.index')->with('success', 'Category Updated Successfully');
+            } else {
+                return back()->with('error', 'Category Creation Failed');
+            }
+        }catch(Exception $e){
+            return redirect()->route('backend.category.index')->with('exception',$e->getMessage());
+        }
     }
 
     /**
@@ -81,6 +111,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            Category::destroy($id);
+            return redirect()->route('backend.category.index')->with('success','Category Deleted Successfully');
+        }catch(Exception $e){
+            return redirect()->route('backend.category.index')->with('exception',$e.getMessage());
+
+        }
     }
 }

@@ -147,10 +147,35 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{route('backend.category.create')}}"><i class="fa fa-plus"></i> Create Category</a></li>
-                        <li><a href="{{route('backend.category.create')}}"><i class="fa fa-list"></i> List Category</a></li>
+                        <li><a href="{{route('backend.category.index')}}"><i class="fa fa-list"></i> List Category</a></li>
                     </ul>
                 </li>
-
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-puzzle-piece"></i>
+                        <span>Role</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{route('backend.role.create')}}"><i class="fa fa-plus"></i> Create Role</a></li>
+                        <li><a href="{{route('backend.role.index')}}"><i class="fa fa-list"></i> List Role</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-tag"></i>
+                        <span>Unit</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{route('backend.unit.create')}}"><i class="fa fa-plus"></i> Create Unit</a></li>
+                        <li><a href="{{route('backend.unit.index')}}"><i class="fa fa-list"></i> List Unit</a></li>
+                    </ul>
+                </li>
             </ul>
         </section>
         <!-- /.sidebar -->
