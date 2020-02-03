@@ -4,12 +4,18 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\TagRequest;
-use Illuminate\Http\Request;
 use App\Model\Tag;
+use Illuminate\Http\Request;
+use Mockery\Exception;
 
-
-class TagController extends Controller
+class TagController extends BackendBaseController
 {
+
+    protected $base_route  = 'backend.tag';
+    protected $view_path   = 'backend.tag';
+    protected $panel       = 'Tag';
+    protected  $page_title,$page_method;
+
     /**
      * Display a listing of the resource.
      *
@@ -17,13 +23,16 @@ class TagController extends Controller
      */
     public function index()
     {
-        try{
-            $data['rows'] = \App\Model\Tag::all();
-            return view('backend.tag.index',compact('data'));
-        }catch(Exception $e){
-            redirect()->route('home')->flash('exception',$e->getMessage());
-        }
+        $this->page_title = 'List';
+        $this->page_method = 'index';
 
+        try{
+            $data['rows'] = Tag::all();
+            return view($this->loadDataToView($this->view_path.'.index'),compact('data'));
+//            return view('backend.tag.index',compact('data'));
+        }catch (Exception $e) {
+            redirect()->route('home')->flash('exception', $e->getMessage());
+        }
     }
 
     /**
@@ -33,7 +42,9 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view('backend.tag.create');
+        $this->page_title = 'Create';
+        $this->page_method = 'create';
+        return view($this->loadDataToView($this->view_path.'.create'));
     }
 
     /**
@@ -47,13 +58,14 @@ class TagController extends Controller
         try{
             $request->request->add(['created_by' => auth()->user()->id]);
             $tag = Tag::create($request->all());
-            if($tag){
-                return redirect()->route('backend.tag.index')->with('success','Tag Created Successfully');
-            }else{
-                return back()->with('error','Tag Creation Failed');
+            if ($tag){
+                return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' created successfully');
+
+            } else {
+                return back()->with('error', $this->panel . ' creation failed');
             }
-        }catch(Exception $e){
-            return redirect()->route('backend.tag.index')->with('exception',$e->getMessage());
+        } catch(Exception $e){
+            return redirect()->route($this->base_route . '.index')->with('exception',$e->getMessage());
         }
     }
 
@@ -65,8 +77,11 @@ class TagController extends Controller
      */
     public function show($id)
     {
+        $this->page_title = 'View';
+        $this->page_method = 'show';
         $data['row'] = Tag::find($id);
-        return view('backend.tag.show',compact('data'));
+
+        return view($this->loadDataToView($this->view_path.'.show'),compact('data'));
     }
 
     /**
@@ -77,8 +92,10 @@ class TagController extends Controller
      */
     public function edit($id)
     {
+        $this->page_title = 'Edit';
+        $this->page_method = 'edit';
         $data['row'] = Tag::find($id);
-        return view('backend.tag.edit',compact('data'));
+        return view($this->loadDataToView($this->view_path.'.edit'),compact('data'));
     }
 
     /**
@@ -90,18 +107,11 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $data['row'] = Tag::find($id);
-            $request->request->add(['updated_by' => auth()->user()->id]);
-            $tag = $data['row']->update($request->all());
-            if ($tag) {
-                return redirect()->route('backend.tag.index')->with('success', 'Tag Updated Successfully');
-            } else {
-                return back()->with('error', 'Tag Creation Failed');
-            }
-        }catch(Exception $e){
-            return redirect()->route('backend.tag.index')->with('exception',$e->getMessage());
-            }
+        $data['row'] = Tag::find($id);
+        $request->request->add(['updated_by' => auth()->user()->id]);
+        $data['row']->update($request->all());
+        return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' updated successfully');
+
     }
 
     /**
@@ -114,10 +124,9 @@ class TagController extends Controller
     {
         try{
             Tag::destroy($id);
-            return redirect()->route('backend.tag.index')->with('success','Tag Deleted Successfully');
-        }catch(Exception $e){
-            return redirect()->route('backend.tag.index')->with('exception',$e.getMessage());
-
+            return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' deleted successfully');
+        } catch (Exception $exception){
+            return redirect()->route($this->base_route . '.index')->with('exception',$exception->getMessage());
         }
 
     }

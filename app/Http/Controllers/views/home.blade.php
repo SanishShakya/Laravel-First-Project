@@ -1,16 +1,16 @@
 @extends('layouts.backend')
-@section('title','Unit Create')
+@section('title','Dashboard Page')
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Unit Management
-            <small>it all about Unit</small>
+            Blank page
+            <small>it all starts here</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Unit</a></li>
-            <li class="active">Create Unit</li>
+            <li><a href="#">Examples</a></li>
+            <li class="active">Blank page</li>
         </ol>
     </section>
 
@@ -31,18 +31,8 @@
                 </div>
             </div>
             <div class="box-body">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{$error}}</li>
-                                @endforeach
-                        </ul>
-                    </div>
-                @endif
-               {!! Form::open(['route' => 'backend.unit.store', 'method' => 'POST']) !!}
-                @include('backend.unit.include.main_form',['button' => 'Save Unit'])
-                {!! Form::close() !!}
+                Start creating your amazing application!
+                @include('backend.includes.flash_message')
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
