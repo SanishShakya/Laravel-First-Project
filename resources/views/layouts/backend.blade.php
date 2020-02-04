@@ -140,11 +140,22 @@
 
           </ul>
         </li>
+          <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-files-o"></i>
+                  <span>Subcategory Management</span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="{{route('backend.subcategory.create')}}"><i class="fa fa-plus"></i> Create Subsubcategory</a></li>
+                  <li><a href="{{route('backend.subcategory.index')}}"><i class="fa fa-list"></i> List Subcategory</a></li>
+
+              </ul>
+          </li>
         <hr/>
-        <li><i class="fa fa-sign-out"></i><a class="dropdown-item" href="{{ route('logout') }}"
+        <li><a class="dropdown-item" href="{{ route('logout') }}"
                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-            {{ __('Logout') }}
+                <i class="fa fa-sign-out"></i>  {{ __('Logout') }}
           </a></li>
       </ul>
     </section>
