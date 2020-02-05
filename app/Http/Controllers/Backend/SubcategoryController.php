@@ -16,7 +16,13 @@ class SubcategoryController extends BackendBaseController
     protected $base_route  = 'backend.subcategory';
     protected $view_path   = 'backend.subcategory';
     protected $panel       = 'Subcategory';
-    protected  $page_title,$page_method;
+    protected  $page_title,$page_method,$image_path;
+    protected $folder_name = 'subcategory';
+
+    function __construct()
+    {
+        $this->image_path = public_path().DIRECTORY_SEPARATOR.'backend'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$this->folder_name.DIRECTORY_SEPARATOR;
+    }
 
     /**
      * Display a listing of the resource.
@@ -58,7 +64,10 @@ class SubcategoryController extends BackendBaseController
      */
     public function store(SubcategoryRequest $request)
     {
+//        dd($request->file('subcategory_image'));
         try{
+            $image = $this->uploadImage($request,'subcategory_image');
+            $request->request->add(['image' => $image]);
             $request->request->add(['created_by' => auth()->user()->id]);
             $record = Subcategory::create($request->all());
             if ($record){

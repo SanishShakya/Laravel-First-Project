@@ -36,7 +36,7 @@
             </ul>
           </div>
         @endif
-        {!! Form::open(['route' =>  $base_route. '.store', 'method' => 'post']) !!}
+        {!! Form::open(['route' =>  $base_route. '.store', 'method' => 'post','files' =>true]) !!}
         @include($view_path . '.include.main_form',['button' => 'Save ' . $panel])
         {!! Form::close() !!}
       </div>
