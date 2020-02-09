@@ -62,7 +62,14 @@ Route::prefix('backend/')->namespace('Backend')->name('backend.')->group(functio
     Route::delete('{id}/subcategory','SubcategoryController@destroy')->name('subcategory.destroy');
     Route::get('subcategory/{id}/edit','SubcategoryController@edit')->name('subcategory.edit');
     Route::put('subcategory/{id}','SubcategoryController@update')->name('subcategory.update');
-
+    /*route for product controller*/
+    Route::get('product/create','ProductController@create')->name('product.create');
+    Route::post('product','ProductController@store')->name('product.store');
+    Route::get('product','ProductController@index')->name('product.index');
+    Route::get('product/{id}','ProductController@show')->name('product.show');
+    Route::delete('{id}/product','ProductController@destroy')->name('product.destroy');
+    Route::get('product/{id}/edit','ProductController@edit')->name('product.edit');
+    Route::put('product/{id}','ProductController@update')->name('product.update');
 });
 
 
