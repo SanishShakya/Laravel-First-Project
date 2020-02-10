@@ -13,6 +13,7 @@
             $('.tag_id').select2();
         });
     </script>
+    @include('backend.product.include.add_rows_script')
     @endsection
 @section('content')
   <!-- Content Header (Page header) -->

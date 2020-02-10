@@ -80,7 +80,7 @@
                 <div class="pull-right">
                   <a class="dropdown-item" href="{{ route('logout') }}"
                      onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                          document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                   </a>
 
@@ -147,8 +147,19 @@
                   <span>Subcategory Management</span>
               </a>
               <ul class="treeview-menu">
-                  <li><a href="{{route('backend.subcategory.create')}}"><i class="fa fa-plus"></i> Create Subsubcategory</a></li>
+                  <li><a href="{{route('backend.subcategory.create')}}"><i class="fa fa-plus"></i> Create Subcategory</a></li>
                   <li><a href="{{route('backend.subcategory.index')}}"><i class="fa fa-list"></i> List Subcategory</a></li>
+
+              </ul>
+          </li>
+          <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-files-o"></i>
+                  <span>Product Management</span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="{{route('backend.product.create')}}"><i class="fa fa-plus"></i> Create Product</a></li>
+                  <li><a href="{{route('backend.product.index')}}"><i class="fa fa-list"></i> List Product</a></li>
 
               </ul>
           </li>
