@@ -10,6 +10,7 @@ use App\Model\Product;
 use App\Model\Subcategory;
 use App\Model\Tag;
 use App\Model\Unit;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
 use Mockery\Exception;
 
@@ -21,9 +22,12 @@ class ProductController extends BackendBaseController
     protected $panel       = 'Product';
     protected  $page_title,$page_method,$image_path;
     protected $folder_name = 'product';
+    protected $databaseManager;
 
-    function __construct()
+
+    function __construct(DatabaseManager $databaseManager)
     {
+        $this->databaseManager = $databaseManager;
         $this->image_path = public_path().DIRECTORY_SEPARATOR.'backend'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$this->folder_name.DIRECTORY_SEPARATOR;
     }
 
@@ -70,19 +74,30 @@ class ProductController extends BackendBaseController
      */
     public function store(ProductRequest $request)
     {
+        $this->databaseManager->beginTransaction();
 //        dd($request->file('product_image'));
         try{
-            $image = $this->uploadImage($request,'product_image');
-            $request->request->add(['image' => $image]);
+            //$request->request->add(['shortdescription' => $request->input('short_description')]);
             $request->request->add(['created_by' => auth()->user()->id]);
-            $record = Product::create($request->all());
-            if ($record){
-                return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' created successfully');
-
-            } else {
-                return back()->with('error', $this->panel . ' creation failed');
+            $request->request->add(['stock' => $request->input('quantity')]);
+            $record =Product::create($request->all());
+            if($record){
+                $record->tags()->attach($request->input('tag_id'));
             }
+            $this->databaseManager->commit();
+
+//            $image = $this->uploadImage($request,'product_image');
+//            $request->request->add(['image' => $image]);
+//            $request->request->add(['created_by' => auth()->user()->id]);
+//            $record = Product::create($request->all());
+//            if ($record){
+//                return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' created successfully');
+//
+//            } else {
+//                return back()->with('error', $this->panel . ' creation failed');
+//            }
         } catch(Exception $e){
+            $this->databaseManager->rollback();
             return redirect()->route($this->base_route . '.index')->with('exception',$e->getMessage());
         }
     }

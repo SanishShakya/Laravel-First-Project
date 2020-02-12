@@ -19,4 +19,8 @@ class Tag extends Model
     function updatedBy(){
         return $this->hasOne(User::class, 'id','updated_by');
     }
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }
