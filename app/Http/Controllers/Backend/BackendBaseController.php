@@ -28,24 +28,40 @@ class BackendBaseController extends Controller
 
     }
 
-    protected function uploadImage(Request $request, $imageName){
-
-        if($image = $request->file($imageName)){
+    protected function uploadImage(Request $request, $imageName) {
+        if ($image = $request->file($imageName)) {
             $newImageName = date('YmdHis')."_".$image->getClientOriginalName();
-            if($image->move($this->image_path, $newImageName)){
+            if ($image->move($this->image_path, $newImageName)) {
                 //code for image resize
-                foreach (config('image_dimensions.backend.'.$this->folder_name) as $dimension) {
-                    //open and resize and image file
-                    $img = Image::make($this->image_path . $newImageName)->resize($dimension['width'], $dimension['height']);
-                    //save the same file as jpg with default quality
-                    $img->save($this->image_path . $dimension['width'] . '_' . $dimension['height'] . '_' . $newImageName);
+                foreach (config('image_dimensions.backend.' . $this->folder_name) as  $dimension) {
+                    // open and resize an image file
+                    $img = Image::make($this->image_path.$newImageName)->resize($dimension['width'], $dimension['height']);
+                    // save the same file as jpg with default quality
+                    $img->save($this->image_path.$dimension['width'].'_'.$dimension['height'].'_'.$newImageName);
                 }
-                    return $newImageName;
-                }else{
-                    return null;
-                }
+                return $newImageName;
+            } else {
+                return null;
             }
+        }
+    }
 
+    protected function uploadImage1($image) {
+        if ($image ) {
+            $newImageName = date('YmdHis')."_".$image->getClientOriginalName();
+            if ($image->move($this->image_path, $newImageName)) {
+                //code for image resize
+                foreach (config('image_dimensions.backend.' . $this->folder_name) as  $dimension) {
+                    // open and resize an image file
+                    $img = Image::make($this->image_path.$newImageName)->resize($dimension['width'], $dimension['height']);
+                    // save the same file as jpg with default quality
+                    $img->save($this->image_path.$dimension['width'].'_'.$dimension['height'].'_'.$newImageName);
+                }
+                return $newImageName;
+            } else {
+                return null;
+            }
+        }
     }
 
 }

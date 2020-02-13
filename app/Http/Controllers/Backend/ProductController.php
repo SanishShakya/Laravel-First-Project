@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\CategoryRequest;
 use App\Http\Requests\Backend\ProductRequest;
+use App\Model\Attribute;
 use App\Model\Category;
-use App\Model\Product;
+use App\Model\Image;
 use App\Model\Subcategory;
+use App\Model\Product;
 use App\Model\Tag;
 use App\Model\Unit;
 use Illuminate\Database\DatabaseManager;
@@ -21,14 +21,14 @@ class ProductController extends BackendBaseController
     protected $view_path   = 'backend.product';
     protected $panel       = 'Product';
     protected  $page_title,$page_method,$image_path;
-    protected $folder_name = 'product';
+    protected  $folder_name = 'product';
     protected $databaseManager;
 
 
-    function __construct(DatabaseManager $databaseManager)
+    function  __construct(DatabaseManager $databaseManager)
     {
         $this->databaseManager = $databaseManager;
-        $this->image_path = public_path().DIRECTORY_SEPARATOR.'backend'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$this->folder_name.DIRECTORY_SEPARATOR;
+        $this->image_path = public_path().DIRECTORY_SEPARATOR.'backend'.DIRECTORY_SEPARATOR.'images' . DIRECTORY_SEPARATOR.$this->folder_name.DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -44,7 +44,6 @@ class ProductController extends BackendBaseController
         try{
             $data['rows'] = Product::all();
             return view($this->loadDataToView($this->view_path.'.index'),compact('data'));
-//            return view('backend.tag.index',compact('data'));
         }catch (Exception $e) {
             redirect()->route('home')->flash('exception', $e->getMessage());
         }
@@ -63,7 +62,9 @@ class ProductController extends BackendBaseController
         $data['subcategories'] = Subcategory::pluck('name','id');
         $data['units'] = Unit::pluck('name','id');
         $data['tags'] = Tag::pluck('name','id');
-        return view($this->loadDataToView($this->view_path.'.create'), compact('data'));
+
+
+        return view($this->loadDataToView($this->view_path.'.create'),compact('data'));
     }
 
     /**
@@ -74,30 +75,43 @@ class ProductController extends BackendBaseController
      */
     public function store(ProductRequest $request)
     {
+
+
         $this->databaseManager->beginTransaction();
-//        dd($request->file('product_image'));
         try{
-            //$request->request->add(['shortdescription' => $request->input('short_description')]);
+            $request->request->add(['shortdescription' => $request->input('short_description')]);
             $request->request->add(['created_by' => auth()->user()->id]);
             $request->request->add(['stock' => $request->input('quantity')]);
-            $record =Product::create($request->all());
-            if($record){
+            $record = Product::create($request->all());
+            if ($record){
                 $record->tags()->attach($request->input('tag_id'));
+
+                $attribute_name = $request->input('attribute_name');
+                $attribute_value = $request->input('attribute_value');
+                $image_title = $request->input('image_title');
+
+                $attribute_data['product_id'] = $record->id;
+                $image_data['product_id'] = $record->id;
+
+                if($request->hasFile('product_image')) {
+                    $files  = $request->file('product_image');
+                    foreach ($files as $key => $file){
+                        $image_data['image'] = $this->uploadImage1($file);
+                        $image_data['title'] =  $image_title[$key];
+                        Image::create($image_data);
+                    }
+                }
+                for($i = 0;$i < count($attribute_name);$i++){
+                    if(!empty($attribute_name[$i])){
+                        $attribute_data['name'] = $attribute_name[$i];
+                        $attribute_data['value'] = $attribute_value[$i];
+                        Attribute::create($attribute_data);
+                    }
+                }
             }
             $this->databaseManager->commit();
-
-//            $image = $this->uploadImage($request,'product_image');
-//            $request->request->add(['image' => $image]);
-//            $request->request->add(['created_by' => auth()->user()->id]);
-//            $record = Product::create($request->all());
-//            if ($record){
-//                return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' created successfully');
-//
-//            } else {
-//                return back()->with('error', $this->panel . ' creation failed');
-//            }
         } catch(Exception $e){
-            $this->databaseManager->rollback();
+            $this->databaseManager->rollBack();
             return redirect()->route($this->base_route . '.index')->with('exception',$e->getMessage());
         }
     }
@@ -157,7 +171,7 @@ class ProductController extends BackendBaseController
     public function destroy($id)
     {
         try{
-            Category::destroy($id);
+            Product::destroy($id);
             return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' deleted successfully');
         } catch (Exception $exception){
             return redirect()->route($this->base_route . '.index')->with('exception',$exception->getMessage());
