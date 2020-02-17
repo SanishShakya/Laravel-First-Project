@@ -70,6 +70,22 @@ Route::prefix('backend/')->namespace('Backend')->name('backend.')->group(functio
     Route::delete('{id}/product','ProductController@destroy')->name('product.destroy');
     Route::get('product/{id}/edit','ProductController@edit')->name('product.edit');
     Route::put('product/{id}','ProductController@update')->name('product.update');
+    /*route for module controller*/
+    Route::get('module/create','ModuleController@create')->name('module.create');
+    Route::post('module','ModuleController@store')->name('module.store');
+    Route::get('module','ModuleController@index')->name('module.index');
+    Route::get('module/{id}','ModuleController@show')->name('module.show');
+    Route::delete('{id}/module','ModuleController@destroy')->name('module.destroy');
+    Route::get('module/{id}/edit','ModuleController@edit')->name('module.edit');
+    Route::put('module/{id}','ModuleController@update')->name('module.update');
+    /*route for permission controller*/
+    Route::get('permission/create','PermissionController@create')->name('permission.create');
+    Route::post('permission','PermissionController@store')->name('permission.store');
+    Route::get('permission','PermissionController@index')->name('permission.index');
+    Route::get('permission/{id}','PermissionController@show')->name('permission.show');
+    Route::delete('{id}/permission','PermissionController@destroy')->name('permission.destroy');
+    Route::get('permission/{id}/edit','PermissionController@edit')->name('permission.edit');
+    Route::put('permission/{id}','PermissionController@update')->name('permission.update');
 });
 
 

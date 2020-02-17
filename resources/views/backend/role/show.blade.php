@@ -28,17 +28,9 @@
       </div>
       <div class="box-body">
         <table class="table table-bordered">
-            <tr>
-                <th>Category Name</th>
-                <td>{{$data['row']->categoryName->name}}</td>
-            </tr>
-            <tr>
+          <tr>
             <th>Name</th>
             <td>{{$data['row']->name}}</td>
-          </tr>
-          <tr>
-            <th>Slug</th>
-            <td>{{$data['row']->slug}}</td>
           </tr>
           <tr>
             <th>Status</th>
@@ -50,19 +42,7 @@
               @endif
             </td>
           </tr>
-          <tr>
-            <th> Description</th>
-            <td>{{$data['row']->description}}</td>
-          </tr>
-          <tr>
-            <th>Meta Description</th>
-            <td>{{$data['row']->meta_description}}</td>
-          </tr>
-          <tr>
-            <th>Meta Keyword</th>
-            <td>{{$data['row']->meta_keyword}}</td>
-          </tr>
-          <tr>
+            <tr>
             <th>Created At</th>
             <td>{{$data['row']->created_at}}</td>
           </tr><tr>

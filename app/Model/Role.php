@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -18,4 +19,6 @@ class Role extends Model
     function updatedBy(){
         return $this->hasOne(User::class, 'id','updated_by');
     }
+
 }
+

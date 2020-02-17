@@ -2,26 +2,34 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\CategoryRequest;
-use App\Http\Requests\Backend\SubcategoryRequest;
+use App\Http\Requests\Backend\ProductRequest;
+use App\Http\Requests\Backend\ModuleRequest;
+use App\Model\Attribute;
 use App\Model\Category;
+use App\Model\Image;
+use App\Model\Module;
 use App\Model\Subcategory;
+use App\Model\Product;
+use App\Model\Unit;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
 use Mockery\Exception;
 
-class SubcategoryController extends BackendBaseController
+class ModuleController extends BackendBaseController
 {
 
-    protected $base_route  = 'backend.subcategory';
-    protected $view_path   = 'backend.subcategory';
-    protected $panel       = 'Subcategory';
+    protected $base_route  = 'backend.module';
+    protected $view_path   = 'backend.module';
+    protected $panel       = 'Module';
     protected  $page_title,$page_method,$image_path;
-    protected $folder_name = 'subcategory';
+    protected  $folder_name = 'module';
+    protected $databaseManager;
 
-    function __construct()
+
+    function  __construct(DatabaseManager $databaseManager)
     {
-        $this->image_path = public_path().DIRECTORY_SEPARATOR.'backend'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$this->folder_name.DIRECTORY_SEPARATOR;
+        $this->databaseManager = $databaseManager;
+        $this->image_path = public_path().DIRECTORY_SEPARATOR.'backend'.DIRECTORY_SEPARATOR.'images' . DIRECTORY_SEPARATOR.$this->folder_name.DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -35,9 +43,8 @@ class SubcategoryController extends BackendBaseController
         $this->page_method = 'index';
 
         try{
-            $data['rows'] = Subcategory::all();
+            $data['rows'] = Module::all();
             return view($this->loadDataToView($this->view_path.'.index'),compact('data'));
-//            return view('backend.tag.index',compact('data'));
         }catch (Exception $e) {
             redirect()->route('home')->flash('exception', $e->getMessage());
         }
@@ -53,7 +60,11 @@ class SubcategoryController extends BackendBaseController
         $this->page_title = 'Create';
         $this->page_method = 'create';
         $data['categories'] = Category::pluck('name','id');
-        return view($this->loadDataToView($this->view_path.'.create'), compact('data'));
+        $data['subcategories'] = Subcategory::pluck('name','id');
+        $data['units'] = Unit::pluck('name','id');
+
+
+        return view($this->loadDataToView($this->view_path.'.create'),compact('data'));
     }
 
     /**
@@ -62,14 +73,11 @@ class SubcategoryController extends BackendBaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SubcategoryRequest $request)
+    public function store(ModuleRequest $request)
     {
-//        dd($request->file('subcategory_image'));
         try{
-            $image = $this->uploadImage($request,'subcategory_image');
-            $request->request->add(['image' => $image]);
             $request->request->add(['created_by' => auth()->user()->id]);
-            $record = Subcategory::create($request->all());
+            $record = Module::create($request->all());
             if ($record){
                 return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' created successfully');
 
@@ -78,6 +86,7 @@ class SubcategoryController extends BackendBaseController
             }
         } catch(Exception $e){
             return redirect()->route($this->base_route . '.index')->with('exception',$e->getMessage());
+
         }
     }
 
@@ -91,7 +100,7 @@ class SubcategoryController extends BackendBaseController
     {
         $this->page_title = 'View';
         $this->page_method = 'show';
-        $data['row'] = Subcategory::find($id);
+        $data['row'] = Module::find($id);
 
         return view($this->loadDataToView($this->view_path.'.show'),compact('data'));
     }
@@ -107,7 +116,7 @@ class SubcategoryController extends BackendBaseController
         $this->page_title = 'Edit';
         $this->page_method = 'edit';
         $data['categories'] = Category::pluck('name','id');
-        $data['row'] = Subcategory::find($id);
+        $data['row'] = Module::find($id);
         return view($this->loadDataToView($this->view_path.'.edit'),compact('data'));
     }
 
@@ -120,10 +129,10 @@ class SubcategoryController extends BackendBaseController
      */
     public function update(Request $request, $id)
     {
-        $data['row'] = Subcategory::find($id);
+        $data['row'] = Module::find($id);
         $request->request->add(['updated_by' => auth()->user()->id]);
         $data['row']->update($request->all());
-        return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' updated successfully');
+        return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' updated successfully');;
 
     }
 
@@ -136,7 +145,7 @@ class SubcategoryController extends BackendBaseController
     public function destroy($id)
     {
         try{
-            Category::destroy($id);
+            Module::destroy($id);
             return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' deleted successfully');
         } catch (Exception $exception){
             return redirect()->route($this->base_route . '.index')->with('exception',$exception->getMessage());

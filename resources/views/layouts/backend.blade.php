@@ -163,6 +163,28 @@
 
               </ul>
           </li>
+          <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-files-o"></i>
+                  <span>Role Management</span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="{{route('backend.role.create')}}"><i class="fa fa-plus"></i> Create Role</a></li>
+                  <li><a href="{{route('backend.role.index')}}"><i class="fa fa-list"></i> List Role</a></li>
+
+              </ul>
+          </li>
+          <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-files-o"></i>
+                  <span>Permission Management</span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="{{route('backend.permission.create')}}"><i class="fa fa-plus"></i> Create Permission</a></li>
+                  <li><a href="{{route('backend.permission.index')}}"><i class="fa fa-list"></i> List Permission</a></li>
+
+              </ul>
+          </li>
         <hr/>
         <li><a class="dropdown-item" href="{{ route('logout') }}"
                onclick="event.preventDefault();

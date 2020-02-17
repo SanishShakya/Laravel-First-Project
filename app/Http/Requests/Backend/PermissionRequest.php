@@ -4,7 +4,7 @@ namespace App\Http\Requests\Backend;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RoleRequest extends FormRequest
+class PermissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,22 @@ class RoleRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'route' => 'required',
+            'module_id' => 'required',
+
+
+
+
         ];
     }
     function messages()
     {
         return [
             'name.required' => 'Please Enter Name',
+            'route.required' => 'Please Enter Route',
+            'module_id.required' => 'Please Enter Module',
+
+
         ];
     }
 }

@@ -20,5 +20,8 @@ class Product extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+    function categoryName(){
+        return $this->hasOne(Category::class, 'id','category_id');
+    }
 }
 
