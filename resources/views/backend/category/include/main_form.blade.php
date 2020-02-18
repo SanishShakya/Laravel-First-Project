@@ -10,7 +10,7 @@
 </div>
 <div class="form-group">
   {!! Form::label('rank', 'Rank') !!}
-  {!! Form::text('rank', null,['placeholder' => 'Enter Rank','class' => 'form-control']) !!}
+  {!! Form::number('rank', null,['placeholder' => 'Enter Rank','class' => 'form-control']) !!}
   @include('backend.includes.form_error', ['field' => 'rank'])
 </div>
 <div class="form-group">

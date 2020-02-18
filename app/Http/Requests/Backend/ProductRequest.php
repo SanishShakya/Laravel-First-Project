@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'slug' => 'required|unique:products',
+            'slug' => 'required|unique:tags',
             'category_id' => 'required',
             'subcategory_id' => 'required',
             'meta_description' => 'max:160',
@@ -33,22 +33,13 @@ class ProductRequest extends FormRequest
             'price' => 'required',
             'quantity' => 'required',
             'unit_id' => 'required',
-
-
-
         ];
     }
+
     function messages()
     {
         return [
-            'name.required' => 'Please Enter Name',
-            'slug.required' => 'Please Enter Name',
-            'subcategory_id.required' => 'Please Enter Name',
-            'category_id.required' => 'Please Enter Name',
-            'price.required' => 'Please Enter Name',
-            'quantity.required' => 'Please Enter Name',
-            'unit_id.required' => 'Please Enter Name',
-
+          'name.required' => 'Please enter name',
         ];
     }
 }

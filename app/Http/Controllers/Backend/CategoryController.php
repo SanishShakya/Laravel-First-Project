@@ -57,8 +57,8 @@ class CategoryController extends BackendBaseController
     {
         try{
             $request->request->add(['created_by' => auth()->user()->id]);
-            $tag = Category::create($request->all());
-            if ($tag){
+            $record = Category::create($request->all());
+            if ($record){
                 return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' created successfully');
 
             } else {

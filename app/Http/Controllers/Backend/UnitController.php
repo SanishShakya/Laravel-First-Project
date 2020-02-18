@@ -1,23 +1,20 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\CategoryRequest;
-use App\Http\Requests\Backend\SubcategoryRequest;
+use App\Http\Requests\Backend\UnitRequest;
 use App\Model\Category;
-use App\Model\Subcategory;
+use App\Model\Unit;
 use Illuminate\Http\Request;
 use Mockery\Exception;
 
 class UnitController extends BackendBaseController
 {
 
-    protected $base_route  = 'backend.subcategory';
-    protected $view_path   = 'backend.subcategory';
-    protected $panel       = 'Subcategory';
+    protected $base_route  = 'backend.unit';
+    protected $view_path   = 'backend.unit';
+    protected $panel       = 'Unit';
     protected  $page_title,$page_method,$image_path;
-    protected $folder_name = 'subcategory';
+    protected $folder_name = 'unit';
 
     function __construct()
     {
@@ -35,7 +32,7 @@ class UnitController extends BackendBaseController
         $this->page_method = 'index';
 
         try{
-            $data['rows'] = Subcategory::all();
+            $data['rows'] = Unit::all();
             return view($this->loadDataToView($this->view_path.'.index'),compact('data'));
 //            return view('backend.tag.index',compact('data'));
         }catch (Exception $e) {
@@ -62,14 +59,14 @@ class UnitController extends BackendBaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SubcategoryRequest $request)
+    public function store(UnitRequest $request)
     {
-//        dd($request->file('subcategory_image'));
+//        dd($request->file('unit_image'));
         try{
-            $image = $this->uploadImage($request,'subcategory_image');
+            $image = $this->uploadImage($request,'unit_image');
             $request->request->add(['image' => $image]);
             $request->request->add(['created_by' => auth()->user()->id]);
-            $record = Subcategory::create($request->all());
+            $record = Unit::create($request->all());
             if ($record){
                 return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' created successfully');
 
@@ -91,7 +88,7 @@ class UnitController extends BackendBaseController
     {
         $this->page_title = 'View';
         $this->page_method = 'show';
-        $data['row'] = Subcategory::find($id);
+        $data['row'] = Unit::find($id);
 
         return view($this->loadDataToView($this->view_path.'.show'),compact('data'));
     }
@@ -107,7 +104,7 @@ class UnitController extends BackendBaseController
         $this->page_title = 'Edit';
         $this->page_method = 'edit';
         $data['categories'] = Category::pluck('name','id');
-        $data['row'] = Subcategory::find($id);
+        $data['row'] = Unit::find($id);
         return view($this->loadDataToView($this->view_path.'.edit'),compact('data'));
     }
 
@@ -120,7 +117,7 @@ class UnitController extends BackendBaseController
      */
     public function update(Request $request, $id)
     {
-        $data['row'] = Subcategory::find($id);
+        $data['row'] = Unit::find($id);
         $request->request->add(['updated_by' => auth()->user()->id]);
         $data['row']->update($request->all());
         return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' updated successfully');;

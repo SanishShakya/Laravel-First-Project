@@ -24,13 +24,14 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|unique:tags',
         ];
     }
+
     function messages()
     {
         return [
-            'name.required' => 'Please Enter Name',
+          'name.required' => 'Please enter name',
         ];
     }
 }

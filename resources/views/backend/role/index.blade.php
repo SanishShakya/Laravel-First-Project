@@ -44,6 +44,7 @@
                 @endif
               </td>
               <td>
+                <a href="{{route($base_route . '.permission',$row->id)}}" class="btn btn-success">Assign Permision</a>
                 <a href="{{route( $base_route . '.edit',$row->id)}}" class="btn btn-info">Edit</a>
                 <a href="{{route($base_route . '.show',$row->id)}}" class="btn btn-info">Show</a>
                 {!! Form::open(['route' => [$base_route . '.destroy',$row->id], 'method' => 'delete','onsubmit' => "return confirm('are you sure to delete?')"]) !!}

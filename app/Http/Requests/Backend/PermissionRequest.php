@@ -24,23 +24,16 @@ class PermissionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'route' => 'required',
+            'name' => 'required|unique:permissions',
             'module_id' => 'required',
-
-
-
-
+            'route' => 'required|unique:permissions',
         ];
     }
+
     function messages()
     {
         return [
-            'name.required' => 'Please Enter Name',
-            'route.required' => 'Please Enter Route',
-            'module_id.required' => 'Please Enter Module',
-
-
+          'name.required' => 'Please enter name',
         ];
     }
 }

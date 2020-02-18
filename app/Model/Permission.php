@@ -9,17 +9,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Permission extends Model
 {
     use SoftDeletes;
+
     protected $table = 'permissions';
+
     protected $fillable = [
-        'name','route','module_id','status','created_by','updated_by'
+        'name', 'route','module_id', 'status','created_by','updated_by'
     ];
-    function createdBy(){
-        return $this->hasOne(User::class, 'id','created_by');
+
+
+    function  createdBy(){
+        return $this->hasOne(User::class,'id','created_by');
     }
-    function updatedBy(){
-        return $this->hasOne(User::class, 'id','updated_by');
+
+    public function module()
+    {
+        return $this->belongsTo(Module::class);
     }
-    function moduleName(){
-        return $this->hasOne(Module::class, 'id','module_id');
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
     }
 }

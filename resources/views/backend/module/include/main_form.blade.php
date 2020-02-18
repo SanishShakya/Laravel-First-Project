@@ -4,7 +4,7 @@
     @include('backend.includes.form_error', ['field' => 'name'])
 </div>
 <div class="form-group">
-    {!! Form::label('route', 'Name') !!}
+    {!! Form::label('route', 'Route') !!}
     {!! Form::text('route', null,['placeholder' => 'Enter Route','class' => 'form-control']) !!}
     @include('backend.includes.form_error', ['field' => 'route'])
 </div>

@@ -9,18 +9,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Subcategory extends Model
 {
     use SoftDeletes;
-    protected $table = 'subcategories';
-    protected $fillable = ['category_id',
-        'name','slug','rank','status','meta_description','meta_keyword','created_by','updated_by'
-    ];
-    function createdBy(){
-        return $this->hasOne(User::class, 'id','created_by');
-    }
-    function categoryName(){
-        return $this->hasOne(Category::class, 'id','category_id');
-    }
-    function updatedBy(){
-        return $this->hasOne(User::class, 'id','updated_by');
-    }
-}
 
+    protected $table = 'subcategories';
+
+    protected $fillable = ['category_id',
+        'name', 'slug', 'rank','status','meta_description','meta_keyword','created_by','updated_by'
+    ];
+
+
+    function  createdBy(){
+        return $this->hasOne(User::class,'id','created_by');
+    }
+    public function categoryName()
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+
+
+}

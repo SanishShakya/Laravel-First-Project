@@ -118,7 +118,18 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Dashboard</a></li>
-        <li class="treeview">
+          <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-files-o"></i>
+                  <span>User Management</span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="{{route('backend.user.create')}}"><i class="fa fa-plus"></i> Create User</a></li>
+                  <li><a href="{{route('backend.user.index')}}"><i class="fa fa-list"></i> List User</a></li>
+
+              </ul>
+          </li>
+          <li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>
             <span>Tag Management</span>
@@ -177,11 +188,11 @@
           <li class="treeview">
               <a href="#">
                   <i class="fa fa-files-o"></i>
-                  <span>Permission Management</span>
+                  <span>Permision Management</span>
               </a>
               <ul class="treeview-menu">
-                  <li><a href="{{route('backend.permission.create')}}"><i class="fa fa-plus"></i> Create Permission</a></li>
-                  <li><a href="{{route('backend.permission.index')}}"><i class="fa fa-list"></i> List Permission</a></li>
+                  <li><a href="{{route('backend.permission.create')}}"><i class="fa fa-plus"></i> Create Permision</a></li>
+                  <li><a href="{{route('backend.permission.index')}}"><i class="fa fa-list"></i> List Permision</a></li>
 
               </ul>
           </li>

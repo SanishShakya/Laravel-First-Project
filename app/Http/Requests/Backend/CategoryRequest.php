@@ -24,15 +24,15 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:categories',
-            'slug' => 'required|unique:categories',
-            'rank' => 'required|unique:categories',
+            'name' => 'required|unique:tags',
+            'slug' => 'required|unique:tags',
         ];
     }
+
     function messages()
     {
         return [
-            'name.required' => 'Please Enter Name',
+          'name.required' => 'Please enter name',
         ];
     }
 }

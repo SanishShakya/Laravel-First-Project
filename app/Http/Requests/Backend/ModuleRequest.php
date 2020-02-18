@@ -23,15 +23,16 @@ class ModuleRequest extends FormRequest
      */
     public function rules()
     {
-             return [
-                 'name' => 'required',
-             ];
-    }
-    function messages()
-    {
         return [
-            'name.required' => 'Please Enter Name',
+            'name' => 'required|unique:modules',
+            'route' => 'required|unique:modules',
         ];
     }
 
+    function messages()
+    {
+        return [
+          'name.required' => 'Please enter name',
+        ];
+    }
 }

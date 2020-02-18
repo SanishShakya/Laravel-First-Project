@@ -2,16 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Requests\Backend\ProductRequest;
 use App\Http\Requests\Backend\ModuleRequest;
-use App\Model\Attribute;
-use App\Model\Category;
-use App\Model\Image;
 use App\Model\Module;
-use App\Model\Subcategory;
-use App\Model\Product;
-use App\Model\Unit;
-use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
 use Mockery\Exception;
 
@@ -21,16 +13,7 @@ class ModuleController extends BackendBaseController
     protected $base_route  = 'backend.module';
     protected $view_path   = 'backend.module';
     protected $panel       = 'Module';
-    protected  $page_title,$page_method,$image_path;
-    protected  $folder_name = 'module';
-    protected $databaseManager;
-
-
-    function  __construct(DatabaseManager $databaseManager)
-    {
-        $this->databaseManager = $databaseManager;
-        $this->image_path = public_path().DIRECTORY_SEPARATOR.'backend'.DIRECTORY_SEPARATOR.'images' . DIRECTORY_SEPARATOR.$this->folder_name.DIRECTORY_SEPARATOR;
-    }
+    protected  $page_title,$page_method;
 
     /**
      * Display a listing of the resource.
@@ -45,6 +28,7 @@ class ModuleController extends BackendBaseController
         try{
             $data['rows'] = Module::all();
             return view($this->loadDataToView($this->view_path.'.index'),compact('data'));
+//            return view('backend.tag.index',compact('data'));
         }catch (Exception $e) {
             redirect()->route('home')->flash('exception', $e->getMessage());
         }
@@ -59,12 +43,7 @@ class ModuleController extends BackendBaseController
     {
         $this->page_title = 'Create';
         $this->page_method = 'create';
-        $data['categories'] = Category::pluck('name','id');
-        $data['subcategories'] = Subcategory::pluck('name','id');
-        $data['units'] = Unit::pluck('name','id');
-
-
-        return view($this->loadDataToView($this->view_path.'.create'),compact('data'));
+        return view($this->loadDataToView($this->view_path.'.create'));
     }
 
     /**
@@ -86,7 +65,6 @@ class ModuleController extends BackendBaseController
             }
         } catch(Exception $e){
             return redirect()->route($this->base_route . '.index')->with('exception',$e->getMessage());
-
         }
     }
 
@@ -115,7 +93,6 @@ class ModuleController extends BackendBaseController
     {
         $this->page_title = 'Edit';
         $this->page_method = 'edit';
-        $data['categories'] = Category::pluck('name','id');
         $data['row'] = Module::find($id);
         return view($this->loadDataToView($this->view_path.'.edit'),compact('data'));
     }

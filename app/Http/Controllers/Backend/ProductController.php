@@ -79,7 +79,7 @@ class ProductController extends BackendBaseController
 
         $this->databaseManager->beginTransaction();
         try{
-            $request->request->add(['shortdescription' => $request->input('short_description')]);
+           $request->request->add(['short_description' => $request->input('short_description')]);
             $request->request->add(['created_by' => auth()->user()->id]);
             $request->request->add(['stock' => $request->input('quantity')]);
             $record = Product::create($request->all());
@@ -100,15 +100,22 @@ class ProductController extends BackendBaseController
                         $image_data['title'] =  $image_title[$key];
                         Image::create($image_data);
                     }
+                    return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' created successfully');
+
+                }else{
+                    return back()->with('error', $this->panel . ' creation failed');
                 }
+
                 for($i = 0;$i < count($attribute_name);$i++){
-                    if(!empty($attribute_name[$i])){
+                    if (!empty($attribute_name[$i])){
                         $attribute_data['name'] = $attribute_name[$i];
                         $attribute_data['value'] = $attribute_value[$i];
                         Attribute::create($attribute_data);
                     }
                 }
+
             }
+
             $this->databaseManager->commit();
         } catch(Exception $e){
             $this->databaseManager->rollBack();

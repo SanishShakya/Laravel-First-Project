@@ -55,10 +55,6 @@
             <td>{{$data['row']->rank}}</td>
           </tr>
           <tr>
-            <th> Description</th>
-            <td>{{$data['row']->description}}</td>
-          </tr>
-          <tr>
             <th>Meta Description</th>
             <td>{{$data['row']->meta_description}}</td>
           </tr>

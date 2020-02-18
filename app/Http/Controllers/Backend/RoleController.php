@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\RoleRequest;
+use App\Model\Module;
 use App\Model\Role;
 use Illuminate\Http\Request;
 use Mockery\Exception;
@@ -55,14 +58,15 @@ class RoleController extends BackendBaseController
     {
         try{
             $request->request->add(['created_by' => auth()->user()->id]);
-            $tag = Role::create($request->all());
-            if ($tag){
+            $record = Role::create($request->all());
+            if ($record){
                 return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' created successfully');
 
             } else {
                 return back()->with('error', $this->panel . ' creation failed');
             }
         } catch(Exception $e){
+            return redirect()->route($this->base_route . '.index')->with('exception',$e->getMessage());
             return redirect()->route($this->base_route . '.index')->with('exception',$e->getMessage());
         }
     }
@@ -128,4 +132,36 @@ class RoleController extends BackendBaseController
         }
 
     }
+
+    public function showPermission($id){
+        $this->page_title = 'Assign';
+        $this->page_method = 'permission';
+        $data['role'] = Role::find($id);
+        $data['modules'] = Module::all();
+        $assigned_permissions = [];
+        foreach ($data['role']->permissions as $permission){
+            array_push($assigned_permissions,$permission->id);
+        }
+        $data[' assigned_permissions'] = $assigned_permissions;
+        return view($this->loadDataToView($this->view_path.'.permission'),compact('data'));
+    }
+
+    public function assignPermission(Request $request)
+    {
+        try{
+            $data['role'] = Role::find($request->role_id);
+            if ($data['role']->permissions()->sync($request->input('permission_id'))){
+                return redirect()->route($this->base_route . '.index')->with('success', 'Permissions assigned successfully');
+
+            } else {
+                return back()->with('error', ' Permissions assign failed');
+            }
+        } catch(Exception $e){
+            return redirect()->route($this->base_route . '.index')->with('exception',$e->getMessage());
+        }
+
+
+    }
+
+
 }
