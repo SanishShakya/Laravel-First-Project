@@ -10,7 +10,7 @@
 </div>
 <div class="form-group">
   {!! Form::label('password', 'Password') !!}
-  {!! Form::password('password', null,['placeholder' => 'Enter Password','class' => 'form-control']) !!}
+  {!! Form::password('password',['placeholder' => 'Enter Password','class' => 'form-control']) !!}
   @include('backend.includes.form_error', ['field' => 'password'])
 </div>
 <div class="form-group">

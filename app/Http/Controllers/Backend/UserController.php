@@ -7,6 +7,7 @@ use App\Model\Role;
 use App\User;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Mockery\Exception;
 
 class UserController extends BackendBaseController
@@ -68,7 +69,10 @@ class UserController extends BackendBaseController
     {
 
         try{
+            $request->request->add(['created_by' =>auth()->user()->id]);
+            $request->request->add(['password' => Hash::make($request->password)]);
             $record = User::create($request->all());
+
             if ($record){
                     return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' created successfully');
 

@@ -130,6 +130,17 @@
               </ul>
           </li>
           <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-files-o"></i>
+                  <span>Module Management</span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="{{route('backend.module.create')}}"><i class="fa fa-plus"></i> Create Module</a></li>
+                  <li><a href="{{route('backend.module.index')}}"><i class="fa fa-list"></i> List Module</a></li>
+
+              </ul>
+          </li>
+          <li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>
             <span>Tag Management</span>
@@ -182,6 +193,17 @@
               <ul class="treeview-menu">
                   <li><a href="{{route('backend.role.create')}}"><i class="fa fa-plus"></i> Create Role</a></li>
                   <li><a href="{{route('backend.role.index')}}"><i class="fa fa-list"></i> List Role</a></li>
+
+              </ul>
+          </li>
+          <li class="treeview">
+              <a href="#">
+                  <i class="fa fa-files-o"></i>
+                  <span>Unit Management</span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="{{route('backend.unit.create')}}"><i class="fa fa-plus"></i> Create Unit</a></li>
+                  <li><a href="{{route('backend.unit.index')}}"><i class="fa fa-list"></i> List Unit</a></li>
 
               </ul>
           </li>

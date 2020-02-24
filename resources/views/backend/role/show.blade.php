@@ -32,10 +32,14 @@
             <th>Name</th>
             <td>{{$data['row']->name}}</td>
           </tr>
-          <tr>
-            <th>Slug</th>
-            <td>{{$data['row']->slug}}</td>
-          </tr>
+            <tr>
+                <th>Permissions</th>
+                <td><ul class="list-unstyled">@foreach($data['row']->permissions as $permission)
+                          <li>{!!$permission->name !!}</li>
+                        @endforeach
+                    </ul>
+                </td>
+            </tr>
           <tr>
             <th>Status</th>
             <td>
@@ -47,18 +51,10 @@
             </td>
           </tr>
           <tr>
-            <th>Meta Description</th>
-            <td>{{$data['row']->meta_description}}</td>
-          </tr>
-          <tr>
-            <th>Meta Keyword</th>
-            <td>{{$data['row']->meta_keyword}}</td>
-          </tr>
-          <tr>
             <th>Created At</th>
             <td>{{$data['row']->created_at}}</td>
           </tr><tr>
-            <th>updated_at</th>
+            <th>Updated At</th>
             <td>{{$data['row']->updated_at}}</td>
           </tr>
           <tr>
@@ -77,7 +73,7 @@
               {!! Form::close() !!}
             </td>
           </tr>
-          
+
         </table>
       </div>
       <!-- /.box-body -->

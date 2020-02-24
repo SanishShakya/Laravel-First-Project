@@ -133,7 +133,7 @@ class UnitController extends BackendBaseController
     public function destroy($id)
     {
         try{
-            Category::destroy($id);
+            Unit::destroy($id);
             return redirect()->route($this->base_route . '.index')->with('success',$this->panel . ' deleted successfully');
         } catch (Exception $exception){
             return redirect()->route($this->base_route . '.index')->with('exception',$exception->getMessage());

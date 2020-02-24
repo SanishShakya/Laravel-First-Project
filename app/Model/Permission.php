@@ -30,4 +30,8 @@ class Permission extends Model
     {
         return $this->belongsToMany(Role::class);
     }
+    public function moduleName()
+    {
+        return $this->hasOne(Module::class, 'id', 'module_id');
+    }
 }

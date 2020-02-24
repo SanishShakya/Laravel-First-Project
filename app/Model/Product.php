@@ -12,7 +12,7 @@ class Product extends Model
 
     protected $table = 'products';
 
-    protected $fillable = ['category_id','subcategory_id','price','quantity','stock','description','shortdescription',
+    protected $fillable = ['category_id','subcategory_id','price','quantity','stock','description','short_description',
         'unit_id','name', 'slug','status','meta_description','meta_keyword','created_by','updated_by'
     ];
 
@@ -24,6 +24,10 @@ class Product extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+    public function categoryName()
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
     }
 
 

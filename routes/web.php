@@ -132,4 +132,7 @@ Route::prefix('backend/')->namespace('Backend')->middleware('auth')->name('backe
 
 
 });
+Route::group(['prefix' => 'laravel-filemanager'], function(){
+    \UniSharp\LaravelFileManager\Lfm::routes();
+});
 
