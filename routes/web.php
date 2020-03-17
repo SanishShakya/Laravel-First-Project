@@ -34,9 +34,8 @@ Route::get('/gallery', function () {
 */
 
 
-
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('/')->namespace('Frontend')->name('frontend.')->group( function () {
+Route::get('/', 'FrontendController@index')->name('index');
 });
 
 

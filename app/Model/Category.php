@@ -20,6 +20,10 @@ class Category extends Model
     function  createdBy(){
         return $this->hasOne(User::class,'id','created_by');
     }
+    public function subcategories()
+    {
+        return $this->hasMany(Subcategory::class);
+    }
 
 
 }
