@@ -13,7 +13,7 @@ class Subcategory extends Model
     protected $table = 'subcategories';
 
     protected $fillable = ['category_id',
-        'name', 'slug', 'rank','status','meta_description','meta_keyword','created_by','updated_by'
+        'name', 'slug', 'rank','status','meta_description','meta_keyword','created_by','updated_by','image'
     ];
 
 
@@ -25,5 +25,8 @@ class Subcategory extends Model
         return $this->hasOne(Category::class, 'id', 'category_id');
     }
 
-
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

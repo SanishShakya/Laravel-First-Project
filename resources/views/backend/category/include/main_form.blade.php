@@ -26,6 +26,11 @@
   {!! Form::textarea('meta_description', null,['placeholder' => 'Enter Meta Description','class' => 'form-control']) !!}
 </div>
 <div class="form-group">
+    {!! Form::label('image', 'Image') !!}
+    {!! Form::file('category_image',['class' => 'form-control']) !!}
+    @include('backend.includes.form_error', ['field' => 'image'])
+</div>
+<div class="form-group">
   {!! Form::label('status', 'Status') !!}
   {!! Form::radio('status', 1) !!} Active
   {!! Form::radio('status', 0,true) !!} De Active

@@ -13,7 +13,7 @@ class Category extends Model
     protected $table = 'categories';
 
     protected $fillable = [
-        'name', 'slug', 'rank', 'description','status','meta_description','meta_keyword','created_by','updated_by'
+        'name', 'slug', 'rank', 'description','status','meta_description','meta_keyword','created_by','updated_by','image'
     ];
 
 
@@ -24,6 +24,9 @@ class Category extends Model
     {
         return $this->hasMany(Subcategory::class);
     }
-
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
 
 }

@@ -36,6 +36,7 @@ Route::get('/gallery', function () {
 
 Route::prefix('/')->namespace('Frontend')->name('frontend.')->group( function () {
 Route::get('/', 'FrontendController@index')->name('index');
+Route::get('/subcategory/{slug}', 'FrontendController@subcategory')->name('subcategory');
 });
 
 
